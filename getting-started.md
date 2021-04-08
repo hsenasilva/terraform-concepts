@@ -43,3 +43,29 @@ variable "aws_region" {
      region = "var.aws_region"
 }
 ```
+
+### Data
+```
+data "aws_ami" "alx" {
+     most_recent = true
+     owners = ["amazon"]
+     filters {}
+}
+```
+
+
+### Resource
+```
+resource "aws_instance" "ex" {
+     ami = "data.aws_ami.alx.id"
+     instance_type = "t2.micro"
+}
+```
+
+
+### Output
+```
+output "aws public_ip" {
+     value = "aws_instance.ex.public_dns"
+}
+```
