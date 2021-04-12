@@ -192,3 +192,30 @@ You will need an Configuration Manager Tool like Chef, Puppet
 
 - Provisioners can run local or remote
 - Provisioners can run on creation or destruction
+- Multiple provisioners
+- If somethong goes wrong terraform will just log where the problem is, and you need to correct
+
+#### Provisioner Example
+
+```terraform
+provisioner "file" {
+  connection {
+    type = "ssh"
+    user = "root"
+    private_key = "var.private_key"
+    host = "var.hostname"
+  }
+  source = "/local/path/to/file.txt"
+  destination = "/path/to/file.txt"
+}
+```
+
+```terraform
+provisioner "local-exec" {
+  command = "local command here"
+}
+
+provisioner "remote-exec" {
+  scripts = ["list", "of", "local", "scripts"]
+}
+```
