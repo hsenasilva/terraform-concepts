@@ -25,6 +25,7 @@ Provisioning Resources > Planning Updates > Using Source Control > Reusing Templ
 - Terraform plugins (to interact with Cloud Providers)
 - Terraform state (To keep track what it on)
 
+## Provisioning Resources
 
 ### Variables
 ``` 
@@ -69,3 +70,42 @@ output "aws public_ip" {
      value = "aws_instance.ex.public_dns"
 }
 ```
+
+
+## Planning Updates
+
+### Terraform State
+- JSON format (do not touch!)
+- Resource mappings and metadata
+- Locking
+- Location
+    - Local
+    - Remote: AWS, Azure, NFS, Terraform Cloud
+- Workspaces
+
+#### State File
+```json
+{
+  "version": 4,
+  "terraform_version": "0.12.5",
+  "serial": 30,
+  "lineage": "",
+  "outputs": {},
+  "resources": []
+}
+```
+
+- State File is the truth
+
+#### Fist rule of Terraform?
+- Make all changes in Terraform
+
+
+### Terraform Planning
+
+- Inspect state
+- Dependency graph
+- Additions, updates, and deletions
+- Parallel execution
+- Save the plan
+
