@@ -109,3 +109,86 @@ output "aws public_ip" {
 - Parallel execution
 - Save the plan
 
+## Terraform Syntax
+
+- Human readable and editable
+- Configuration syntax and expressions
+- Conditionals, functions, templates
+
+### Blocks
+
+- Basic block
+
+``` terraform
+block_type label_one label_two {
+  key = value
+  embedded_block {
+    key = value
+  }
+}
+```
+
+
+- Example block
+``` terraform
+resource "aws_route_table" "route-table" {
+  vpc_id = "id12345"
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "id4343434"
+  }
+}
+```
+
+### Object Types
+
+- Different value types
+``` terraform
+string = "taco"
+number = 5
+bool = true
+list = ["bean-taco", "beef-taco"]
+map = {name = "Ned", age = 42, loves_tacos = true}
+```
+
+### References
+
+- Keyword reference
+```terraform
+var.taco_day
+aws_instance.taco_truck.name
+local.taco_toppings.cheeses
+module.taco_hut.locations
+```
+
+- Interpolation
+
+```terraform
+taco_name = "neds-${var.taco_type}"
+```
+
+- Strings, numbers, and bools
+```terraform
+local.taco_count #returns the number
+```
+
+- Lists and maps
+```terraform
+local.taco_toppings[2] # returns element 3
+local.taco_map["like-tacos"] # returns value at keyname
+```
+
+- Resource values
+```terraform
+var.region # returns us-east-1
+data.aws_availability_zones.azs.names[1] # returns 2nd AZ
+```
+
+### Terraform Provisioners
+
+Terraform only provision/update/delete resources, 
+then if you need to check for example a internal process inside a EC2 instance,
+You will need an Configuration Manager Tool like Chef, Puppet
+
+- Provisioners can run local or remote
+- Provisioners can run on creation or destruction
