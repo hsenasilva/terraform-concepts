@@ -186,14 +186,14 @@ data.aws_availability_zones.azs.names[1] # returns 2nd AZ
 
 ### Terraform Provisioners
 
-Terraform only provision/update/delete resources, 
+Terraform only do well provision/update/delete resources, 
 then if you need to check for example a internal process inside a EC2 instance,
-You will need an Configuration Manager Tool like Chef, Puppet
+is recommended to use a Configuration Manager Tool like Chef, Puppet
 
 - Provisioners can run local or remote
 - Provisioners can run on creation or destruction
 - Multiple provisioners
-- If somethong goes wrong terraform will just log where the problem is, and you need to correct
+- If something goes wrong terraform will just log where the problem is, and you need to correct
 
 #### Provisioner Example
 
