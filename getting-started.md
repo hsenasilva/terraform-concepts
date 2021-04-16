@@ -79,8 +79,8 @@ output "aws public_ip" {
 - Resource mappings and metadata
 - Locking
 - Location
-    - Local
-    - Remote: AWS, Azure, NFS, Terraform Cloud
+  - Local
+  - Remote: AWS, Azure, NFS, Terraform Cloud
 - Workspaces
 
 #### State File
@@ -184,9 +184,9 @@ var.region # returns us-east-1
 data.aws_availability_zones.azs.names[1] # returns 2nd AZ
 ```
 
-### Terraform Provisioners
+## Terraform Provisioners
 
-Terraform only do well provision/update/delete resources, 
+Terraform only do well provision/update/delete resources,
 then if you need to check for example a internal process inside a EC2 instance,
 is recommended to use a Configuration Manager Tool like Chef, Puppet
 
@@ -219,3 +219,41 @@ provisioner "remote-exec" {
   scripts = ["list", "of", "local", "scripts"]
 }
 ```
+
+## Terraform Functions
+
+### Most useful
+
+- Numeric - min(42, 14, 7)
+- String - lower("TACOS")
+- Collection - merge(map1, map2)
+- Filesystem - file(path)
+- IP network - cidrsubnet()
+- Date and time - timestamp()
+
+### Functions
+
+#### Configure networking
+```terraform
+variable network_info {
+  default = "10.1.0.0/16" # type, default, description
+}
+
+# Returns 10.1.0.0/24
+cidr_block = cidrsubnet(var.network_info, 8, 0)
+
+# Returns 10.1.0.5
+host_ip = cidrhost(var.network_info, 5)
+```
+#### Create ami map
+```terraform
+variable "amis" {
+  type = "map"
+  default = {
+    us-east-1 = "ami-1234"
+    us-west-1 = "ami-5678"
+  }
+}
+ami = lookup(var.amis, "us-east-1", "error")
+```
+
