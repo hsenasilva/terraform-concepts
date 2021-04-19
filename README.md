@@ -257,3 +257,50 @@ variable "amis" {
 ami = lookup(var.amis, "us-east-1", "error")
 ```
 
+### Working with Variables
+
+- Name, type, default
+- Multiple sources
+  - File, environment variable, var option
+- Overriding variables and precedence
+  - Environment, file, command line
+- Select values based on environment
+- Split Terraform configuration file
+
+#### Variables Examples
+
+```terraform
+# Specify default variable and type
+variable "environment_name" {
+  type = string
+  default = "development"
+}
+```
+
+```terraform
+# Specify variable in file
+environment_name = "uat"
+```
+
+```terraform
+# Specify variable in-line
+terraform plan -var 'environment_name=production'
+```
+
+```terraform
+# Create variable map
+variable "cidr" {
+  type = map(string)
+  default = {
+    development = "10.0.0.0/16"
+    uat = "10.1.0.0/16"
+    production = "10.2.0.0/16"
+  }
+}
+```
+
+```terraform
+# Use map based on environment
+cidr_block = lookup(var.cidr, var.environment_name)
+```
+
