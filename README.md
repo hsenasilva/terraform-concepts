@@ -304,3 +304,43 @@ variable "cidr" {
 cidr_block = lookup(var.cidr, var.environment_name)
 ```
 
+## Terraform Modules
+
+- Code reuse
+- Remote or local source
+  - Terraform Registry
+- Root module
+- Versioning
+- Provider inheritance
+- Multiple instances (no count)
+
+### Module Components
+- Input Variables
+- Resources
+- Output values
+
+### Terraform Module
+```terraform
+variable "name" {}
+resource "aws_s3_bucket" "bucket" {
+  name = var.name
+  [...]
+}
+output "bucket_id" {
+  value = aws_s3_bucket.bucket.id
+}
+```
+
+```terraform
+# Create module bucket 
+module "bucket" {
+  name = "taco-bucket"
+  source = ".\\Modules\\s3"
+}
+
+# Use taco-bucket
+resource "aws_s3_bucket_object" {
+  bucket = module.bucket.bucket_id
+  [...]
+}
+```
